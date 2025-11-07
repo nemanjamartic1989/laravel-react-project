@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Models\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
@@ -44,14 +45,14 @@ class AuthController extends Controller
      * @param RegisterRequest $request
      * @return void
      */
-    public function register(RegisterRequest $request): Response
+    public function register(RegisterRequest $request): JsonResponse
     {
         $dto = new RegisterUserDataDTO($request->validated());
         $user = $this->repository->createUser($dto);
 
         $token = $user->createToken('main')->plainTextToken;
 
-        return response(compact('user', 'token'));
+        return response()->json(compact('user', 'token'));
     }
 
     /**

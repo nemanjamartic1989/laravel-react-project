@@ -5,6 +5,7 @@ import Login from "./views/Login";
 import NotFound from "./views/NotFound";
 import Register from "./views/Register";
 import Users from "./views/Users";
+import UserForm from "./views/UserForm";
 
 const router = createBrowserRouter([
   {

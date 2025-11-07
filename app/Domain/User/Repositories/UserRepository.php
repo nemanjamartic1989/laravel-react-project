@@ -3,14 +3,11 @@
 namespace App\Domain\User\Repositories;
 
 use App\Domain\User\DTO\RegisterUserDataDTO;
+use App\Domain\User\Repositories\UserRepositoryInterface;
 use App\Models\User;
 
-class UserRepository
+class UserRepository implements UserRepositoryInterface
 {
-    public function getAll()
-    {
-        
-    }
     /**
      * Create user
      * @param RegisterUserDataDTO $data

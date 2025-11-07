@@ -1,30 +1,30 @@
-import {Navigate, Outlet, Link, useNavigate} from 'react-router-dom'
+import { Navigate, Outlet, Link, useNavigate } from 'react-router-dom'
 import { useStateContext } from '../context/ContextProvider';
 import axiosClient from "../axios-client.js";
-import {useEffect} from "react";
+import { useEffect } from "react";
 
 export default function DefaultLayout() {
-    const {user, token, setUser, setToken} = useStateContext();
+    const { user, token, setUser, setToken } = useStateContext();
     const navigate = useNavigate();
 
     const onLogout = (e) => {
         e.preventDefault();
 
         axiosClient.post('/logout')
-        .then(() => {
-            setUser({})
-            setToken(null)
-            navigate('/login');
-        })
+            .then(() => {
+                setUser({})
+                setToken(null)
+                navigate('/login');
+            })
     }
 
     useEffect(() => {
         if (!token) return;
 
         axiosClient.get('/user')
-        .then(({data}) => {
-            setUser(data)
-        })
+            .then(({ data }) => {
+                setUser(data)
+            })
     }, [])
 
     if (!token) {
