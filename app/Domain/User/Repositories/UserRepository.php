@@ -7,6 +7,10 @@ use App\Models\User;
 
 class UserRepository
 {
+    public function getAll()
+    {
+        
+    }
     /**
      * Create user
      * @param RegisterUserDataDTO $data
