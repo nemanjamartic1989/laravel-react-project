@@ -4,10 +4,24 @@ namespace App\Domain\User\Repositories;
 
 use App\Domain\User\DTO\RegisterUserDataDTO;
 use App\Domain\User\Repositories\UserRepositoryInterface;
+use App\Http\Resources\UserResource;
 use App\Models\User;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class UserRepository implements UserRepositoryInterface
 {
+    /**
+     * Get all users
+     * @param int $perPage
+     * @return AnonymousResourceCollection
+     */
+    public function getAll(int $perPage): AnonymousResourceCollection
+    {
+        return UserResource::collection(User::query()
+            ->orderBy('id', 'desc')
+            ->paginate(10));
+
+    }
     /**
      * Create user
      * @param RegisterUserDataDTO $data

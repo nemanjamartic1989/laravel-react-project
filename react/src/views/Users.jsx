@@ -27,8 +27,6 @@ export default function Users() {
     setLoading(true)
     axiosClient.get('/users')
       .then(({ data }) => {
-        console.log(import.meta.env.VITE_API_BASE_URL)
-
         setLoading(false)
         setUsers(data.data)
       })
@@ -64,7 +62,7 @@ export default function Users() {
           }
           {!loading &&
             <tbody>
-            {/* {users.map(u => (
+            {users.map(u => (
               <tr key={u.id}>
                 <td>{u.name}</td>
                 <td>{u.email}</td>
@@ -75,7 +73,7 @@ export default function Users() {
                   <button className="btn-delete" onClick={ev => onDeleteClick(u)}>Delete</button>
                 </td>
               </tr>
-            ))} */}
+            ))}
             </tbody>
           }
         </table>
