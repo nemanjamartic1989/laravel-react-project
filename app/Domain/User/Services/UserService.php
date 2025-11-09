@@ -3,6 +3,7 @@
 namespace App\Domain\User\Services;
 
 use App\Domain\User\DTO\RegisterUserDataDTO;
+use App\Domain\User\DTO\UpdateUserDataDTO;
 use App\Domain\User\Repositories\UserRepositoryInterface;
 use App\Models\User;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -33,5 +34,16 @@ class UserService
     {
         $dto = new RegisterUserDataDTO($data);
         return $this->repository->createUser($dto);
+    }
+
+    /**
+     * Create user
+     * @param array $data
+     * @return User
+     */
+    public function update(User $user, array $data): User
+    {
+        $dto = new UpdateUserDataDTO($data);
+        return $this->repository->update($user, $dto);
     }
 }

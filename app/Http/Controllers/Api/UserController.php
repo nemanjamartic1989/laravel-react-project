@@ -52,9 +52,12 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateUserRequest $request, string $id)
+    public function update(UpdateUserRequest $request, User $user): UserResource
     {
-        //
+        $data = $request->validated();
+        $user = $this->service->update($user, $data);
+
+        return new UserResource($user);
     }
 
     /**
