@@ -2,38 +2,45 @@ import {useEffect, useState} from "react";
 import axiosClient from "../axios-client.js";
 import {Link} from "react-router-dom";
 import {useStateContext} from "../context/ContextProvider.jsx";
+import ConfirmationModal from "../components/modals/ConfirmationModal.jsx";
 
 export default function Users() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
-  const {setNotification} = useStateContext()
+  const [showModal, setShowModal] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
+  const {setNotification} = useStateContext();
 
   useEffect(() => {
     getUsers();
   }, [])
 
-  const onDeleteClick = user => {
-    if (!window.confirm("Are you sure you want to delete this user?")) {
-      return
-    }
-    axiosClient.delete(`/users/${user.id}`)
+  const onDeleteClick = (user) => {
+    setSelectedUser(user);
+    setShowModal(true); // otvara modal
+  };
+
+  const confirmDelete = () => {
+    axiosClient.delete(`/users/${selectedUser.id}`)
       .then(() => {
-        setNotification('User was successfully deleted')
-        getUsers()
+        setNotification('User was successfully deleted');
+        getUsers();
       })
-  }
+      .finally(() => {
+        setShowModal(false);
+        setSelectedUser(null);
+      });
+  };
 
   const getUsers = () => {
-    setLoading(true)
+    setLoading(true);
     axiosClient.get('/users')
       .then(({ data }) => {
-        setLoading(false)
-        setUsers(data.data)
+        setLoading(false);
+        setUsers(data.data);
       })
-      .catch(() => {
-        setLoading(false)
-      })
-  }
+      .catch(() => setLoading(false));
+  };
 
   return (
     <div>
@@ -70,7 +77,7 @@ export default function Users() {
                 <td>
                   <Link className="btn-edit" to={'/users/' + u.id}>Edit</Link>
                   &nbsp;
-                  <button className="btn-delete" onClick={ev => onDeleteClick(u)}>Delete</button>
+                  <button className="btn-delete" onClick={() => onDeleteClick(u)}>Delete</button>
                 </td>
               </tr>
             ))}
@@ -78,6 +85,14 @@ export default function Users() {
           }
         </table>
       </div>
+
+      <ConfirmationModal
+        show={showModal}
+        title="Delete User"
+        message={`Are you sure you want to delete ${selectedUser?.name}?`}
+        onConfirm={confirmDelete}
+        onCancel={() => setShowModal(false)}
+      />
     </div>
   )
 }
