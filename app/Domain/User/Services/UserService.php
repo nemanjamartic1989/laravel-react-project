@@ -26,11 +26,12 @@ class UserService
 
     /**
      * Create user
-     * @param RegisterUserDataDTO $dto
+     * @param array $data
      * @return User
      */
-    public function createUser(RegisterUserDataDTO $dto): User
+    public function store(array $data): User
     {
+        $dto = new RegisterUserDataDTO($data);
         return $this->repository->createUser($dto);
     }
 }
