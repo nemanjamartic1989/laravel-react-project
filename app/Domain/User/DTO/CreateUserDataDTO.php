@@ -2,7 +2,7 @@
 
 namespace App\Domain\User\DTO;
 
-class RegisterUserDataDTO
+class CreateUserDataDTO
 {
     /**
      * Full name

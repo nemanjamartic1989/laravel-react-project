@@ -2,7 +2,7 @@
 
 namespace App\Domain\User\Services;
 
-use App\Domain\User\DTO\RegisterUserDataDTO;
+use App\Domain\User\DTO\CreateUserDataDTO;
 use App\Domain\User\DTO\UpdateUserDataDTO;
 use App\Domain\User\Repositories\UserRepositoryInterface;
 use App\Models\User;
@@ -32,7 +32,7 @@ class UserService
      */
     public function store(array $data): User
     {
-        $dto = new RegisterUserDataDTO($data);
+        $dto = new CreateUserDataDTO($data);
         return $this->repository->createUser($dto);
     }
 

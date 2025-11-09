@@ -3,7 +3,7 @@
 namespace Tests\Unit;
 
 use App\Domain\User\Repositories\UserRepository;
-use App\Domain\User\DTO\RegisterUserDataDTO;
+use App\Domain\User\DTO\CreateUserDataDTO;
 use App\Domain\User\DTO\UpdateUserDataDTO;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -24,7 +24,7 @@ class UserRepositoryTest extends TestCase
     /** @test */
     public function it_creates_a_user()
     {
-        $dto = new RegisterUserDataDTO([
+        $dto = new CreateUserDataDTO([
             'name' => 'Jane Doe',
             'email' => 'jane@example.com',
             'password' => bcrypt('secret123'),

@@ -2,7 +2,7 @@
 
 namespace Tests\Unit;
 
-use App\Domain\User\DTO\RegisterUserDataDTO;
+use App\Domain\User\DTO\CreateUserDataDTO;
 use App\Domain\User\Repositories\UserRepositoryInterface;
 use App\Domain\User\Services\UserService;
 use App\Models\User;
@@ -56,7 +56,7 @@ class UserServiceTest extends TestCase
         $this->repository
             ->shouldReceive('createUser')
             ->once()
-            ->with(Mockery::on(fn($dto) => $dto instanceof RegisterUserDataDTO && $dto->email === 'john@example.com'))
+            ->with(Mockery::on(fn($dto) => $dto instanceof CreateUserDataDTO && $dto->email === 'john@example.com'))
             ->andReturn($expectedUser);
 
         $user = $this->service->store($data);

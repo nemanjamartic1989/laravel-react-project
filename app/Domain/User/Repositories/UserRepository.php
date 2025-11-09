@@ -2,7 +2,7 @@
 
 namespace App\Domain\User\Repositories;
 
-use App\Domain\User\DTO\RegisterUserDataDTO;
+use App\Domain\User\DTO\CreateUserDataDTO;
 use App\Domain\User\DTO\UpdateUserDataDTO;
 use App\Domain\User\Repositories\UserRepositoryInterface;
 use App\Http\Resources\UserResource;
@@ -25,10 +25,10 @@ class UserRepository implements UserRepositoryInterface
     }
     /**
      * Create user
-     * @param RegisterUserDataDTO $data
+     * @param CreateUserDataDTO $data
      * @return User
      */
-    public function createUser(RegisterUserDataDTO $data): User
+    public function createUser(CreateUserDataDTO $data): User
     {
         return User::create([
             'name'      => $data->name,

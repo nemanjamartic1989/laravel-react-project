@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Domain\User\Repositories\UserRepository;
-use App\Domain\User\DTO\RegisterUserDataDTO;
+use App\Domain\User\DTO\CreateUserDataDTO;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
@@ -47,7 +47,7 @@ class AuthController extends Controller
      */
     public function register(RegisterRequest $request): JsonResponse
     {
-        $dto = new RegisterUserDataDTO($request->validated());
+        $dto = new CreateUserDataDTO($request->validated());
         $user = $this->repository->createUser($dto);
 
         $token = $user->createToken('main')->plainTextToken;
