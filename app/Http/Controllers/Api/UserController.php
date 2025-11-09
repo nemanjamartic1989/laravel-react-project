@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\UserResource;
+use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -39,11 +40,13 @@ class UserController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Show user
+     * @param User $user
+     * @return UserResource
      */
-    public function show(string $id)
+    public function show(User $user): UserResource
     {
-        //
+        return new UserResource($user);
     }
 
     /**
