@@ -8,7 +8,7 @@ export default function Login() {
   const emailRef = createRef()
   const passwordRef = createRef()
   const { setUser, setToken } = useStateContext()
-  const [message, setMessage] = useState(null)
+  const [errors, setErrors] = useState(null)
   const navigate = useNavigate();
 
   const onSubmit = ev => {
@@ -28,7 +28,7 @@ export default function Login() {
       .catch((err) => {
         const response = err.response;
         if (response && response.status === 422) {
-          setMessage(response.data.message)
+          setErrors(response.data.errors)
         }
       })
   }
@@ -38,15 +38,10 @@ export default function Login() {
       <div className="form">
         <form onSubmit={onSubmit}>
           <h1 className="title">Login into your account</h1>
-
-          {message &&
-            <div className="alert">
-              <p>{message}</p>
-            </div>
-          }
-
           <input ref={emailRef} type="email" placeholder="Email"/>
+          {errors?.email && <span className="error">{errors.email[0]}</span>}
           <input ref={passwordRef} type="password" placeholder="Password"/>
+          {errors?.password && <span className="error">{errors.password[0]}</span>}
           <button className="btn btn-block">Login</button>
           <p className="message">Not registered? <Link to="/register">Create an account</Link></p>
         </form>
