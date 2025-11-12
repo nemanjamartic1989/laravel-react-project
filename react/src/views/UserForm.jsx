@@ -70,18 +70,15 @@ export default function UserForm() {
                         Loading...
                     </div>
                 )}
-                {errors &&
-                    <div className="alert">
-                        {Object.keys(errors).map(key => (
-                            <p key={key}>{errors[key][0]}</p>
-                        ))}
-                    </div>
-                }
+
                 {!loading && (
                     <form onSubmit={onSubmit}>
                         <input value={user.name} onChange={ev => setUser({ ...user, name: ev.target.value })} placeholder="Name" />
+                        {errors?.name && <span className="error">{errors.name[0]}</span>}
                         <input value={user.email} onChange={ev => setUser({ ...user, email: ev.target.value })} placeholder="Email" />
+                        {errors?.email && <span className="error">{errors.email[0]}</span>}
                         <input type="password" onChange={ev => setUser({ ...user, password: ev.target.value })} placeholder="Password" />
+                        {errors?.password && <span className="error">{errors.password[0]}</span>}
                         <input type="password" onChange={ev => setUser({ ...user, password_confirmation: ev.target.value })} placeholder="Password Confirmation" />
                         <button className="btn">Save</button>
                     </form>
