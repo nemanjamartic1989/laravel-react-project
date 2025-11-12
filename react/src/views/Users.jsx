@@ -3,13 +3,13 @@ import axiosClient from "../axios-client.js";
 import {Link} from "react-router-dom";
 import {useStateContext} from "../context/ContextProvider.jsx";
 import ConfirmationModal from "../components/modals/ConfirmationModal.jsx";
+import { toast, ToastContainer } from "react-toastify";
 
 export default function Users() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
-  const {setNotification} = useStateContext();
 
   useEffect(() => {
     getUsers();
@@ -17,14 +17,18 @@ export default function Users() {
 
   const onDeleteClick = (user) => {
     setSelectedUser(user);
-    setShowModal(true); // otvara modal
+    setShowModal(true);
   };
 
   const confirmDelete = () => {
     axiosClient.delete(`/users/${selectedUser.id}`)
       .then(() => {
-        setNotification('User was successfully deleted');
-        getUsers();
+        toast.success('User was successfully deleted!', {
+              autoClose: 3000,
+              onClose: () => {
+                  getUsers();
+              }
+          });
       })
       .finally(() => {
         setShowModal(false);
@@ -93,6 +97,7 @@ export default function Users() {
         onConfirm={confirmDelete}
         onCancel={() => setShowModal(false)}
       />
+      <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
     </div>
   )
 }

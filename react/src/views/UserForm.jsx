@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axiosClient from "../axios-client.js";
-import { useStateContext } from "../context/ContextProvider.jsx";
+import { toast, ToastContainer } from "react-toastify";
 
 export default function UserForm() {
     const navigate = useNavigate();
@@ -15,7 +15,6 @@ export default function UserForm() {
     })
     const [errors, setErrors] = useState(null)
     const [loading, setLoading] = useState(false)
-    const { setNotification } = useStateContext()
 
     useEffect(() => {
         if (!id) return;
@@ -36,24 +35,35 @@ export default function UserForm() {
         if (user.id) {
             axiosClient.put(`/users/${user.id}`, user)
                 .then(() => {
-                    setNotification('User was successfully updated')
-                    navigate('/users')
+                    toast.success('User successfully created!', {
+                        autoClose: 3000,
+                        onClose: () => {
+                            navigate('/users');
+                        }
+                    });
                 })
                 .catch(err => {
                     const response = err.response;
                     if (response && response.status === 422) {
+                        toast.error('Please fill required fields.');
                         setErrors(response.data.errors)
                     }
                 })
         } else {
             axiosClient.post('/users', user)
                 .then(() => {
-                    setNotification('User was successfully created')
+                    toast.success('User successfully updated!', {
+                        autoClose: 3000,
+                        onClose: () => {
+                            navigate('/users');
+                        }
+                    });
                     navigate('/users')
                 })
                 .catch(err => {
                     const response = err.response;
                     if (response && response.status === 422) {
+                        toast.error('Please fill required fields.');
                         setErrors(response.data.errors)
                     }
                 })
@@ -84,6 +94,7 @@ export default function UserForm() {
                     </form>
                 )}
             </div>
+            <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
         </>
     )
 }

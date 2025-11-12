@@ -3,6 +3,7 @@ import {Link, useNavigate} from "react-router-dom";
 import {createRef, useState} from "react";
 import axiosClient from "../axios-client.js";
 import {useStateContext} from "../context/ContextProvider.jsx";
+import { ToastContainer, toast } from 'react-toastify';
 
 export default function Signup() {
   const nameRef = createRef()
@@ -30,12 +31,20 @@ export default function Signup() {
       .then(({data}) => {
         setUser(data.user)
         setToken(data.token);
-        navigate('/user');
+        toast.success('Registration successful!', {
+            autoClose: 3000,
+            onClose: () => {
+                navigate('/user');
+            }
+        });
       })
       .catch(err => {
         const response = err.response;
         if (response && response.status === 422) {
+          toast.error('Please fill required fields.');
           setErrors(response.data.errors)
+        } else {
+          toast.error('Something went wrong.');
         }
       })
   }
@@ -56,6 +65,7 @@ export default function Signup() {
           <p className="message">Already registered? <Link to="/login">Login</Link></p>
         </form>
       </div>
+      <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
     </div>
   )
 }
