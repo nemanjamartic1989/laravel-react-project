@@ -1,51 +1,84 @@
-import {Link, useNavigate} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axiosClient from "../axios-client.js";
-import {createRef} from "react";
-import {useStateContext} from "../context/ContextProvider.jsx";
+import { useStateContext } from "../context/ContextProvider.jsx";
 import { useState } from "react";
 
 export default function Login() {
-  const emailRef = createRef()
-  const passwordRef = createRef()
-  const { setUser, setToken } = useStateContext()
-  const [errors, setErrors] = useState(null)
+  const { setUser, setToken } = useStateContext();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [errors, setErrors] = useState(null);
+  const [remember, setRemember] = useState(false);
   const navigate = useNavigate();
 
   const onSubmit = ev => {
-    ev.preventDefault()
+    ev.preventDefault();
 
-    const payload = {
-      email: emailRef.current.value,
-      password: passwordRef.current.value,
-    }
+    const payload = { email, password };
 
     axiosClient.post('/login', payload)
-      .then(({data}) => {
-        setUser(data.user)
+      .then(({ data }) => {
+        setUser(data.user);
+
+        if (remember) {
+          localStorage.setItem("ACCESS_TOKEN", data.token);
+        } else {
+          sessionStorage.setItem("ACCESS_TOKEN", data.token);
+        }
+
         setToken(data.token);
         navigate('/user');
       })
       .catch((err) => {
         const response = err.response;
         if (response && response.status === 422) {
-          setErrors(response.data.errors)
+          setErrors(response.data.errors);
         }
-      })
+      });
   }
 
   return (
     <div className="login-signup-form animated fadeInDown">
       <div className="form">
-        <form onSubmit={onSubmit}>
+        <form onSubmit={onSubmit} autoComplete="on">
           <h1 className="title">Login into your account</h1>
-          <input ref={emailRef} type="email" placeholder="Email"/>
+
+          <input
+            type="email"
+            name="email"
+            autoComplete="username"
+            placeholder="Email"
+            value={email}
+            onChange={e => setEmail(e.target.value)}
+          />
           {errors?.email && <span className="error">{errors.email[0]}</span>}
-          <input ref={passwordRef} type="password" placeholder="Password"/>
+
+          <input
+            type="password"
+            name="password"
+            autoComplete="current-password"
+            placeholder="Password"
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+          />
           {errors?.password && <span className="error">{errors.password[0]}</span>}
+
+          <div className='remember-me-box'>
+            <input
+              id="remember"
+              type="checkbox"
+              checked={remember}
+              onChange={e => setRemember(e.target.checked)}
+            />
+            <label htmlFor="remember">
+              Remember me
+            </label>
+          </div>
+
           <button className="btn btn-block">Login</button>
-          <p className="message">Not registered? <Link to="/register">Create an account</Link></p>
         </form>
+
       </div>
     </div>
-  )
+  );
 }

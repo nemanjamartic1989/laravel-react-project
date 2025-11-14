@@ -180,6 +180,20 @@ table > tbody > tr > td {
     text-decoration: none;
 }
 
+.remember-me-box {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+  margin: 10px 0;
+  float: left;
+}
+
+.remember-me-box label {
+  margin-top: -15px;
+  white-space: nowrap;
+}
+
 /* Login/Signup form */
 
 
