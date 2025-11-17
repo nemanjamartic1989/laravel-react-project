@@ -42,6 +42,7 @@ export default function Users() {
       .then(({ data }) => {
         setLoading(false);
         setUsers(data.data);
+        console.log(data.data);
       })
       .catch(() => setLoading(false));
   };
@@ -58,6 +59,7 @@ export default function Users() {
           <tr>
             <th>Name</th>
             <th>Email</th>
+            <th>Role</th>
             <th>Create Date</th>
             <th>Actions</th>
           </tr>
@@ -77,6 +79,7 @@ export default function Users() {
               <tr key={u.id}>
                 <td>{u.name}</td>
                 <td>{u.email}</td>
+                <td>{u.role}</td>
                 <td>{u.created_at}</td>
                 <td>
                   <Link className="btn-edit" to={'/users/' + u.id}>Edit</Link>
