@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use App\Domain\User\Repositories\PostRepository;
-use App\Domain\User\Repositories\PostRepositoryInterface;
+use App\Domain\Post\Repositories\PostRepository;
+use App\Domain\Post\Repositories\PostRepositoryInterface;
 use App\Domain\User\Repositories\UserRepository;
 use App\Domain\User\Repositories\UserRepositoryInterface;
 use Illuminate\Support\ServiceProvider;

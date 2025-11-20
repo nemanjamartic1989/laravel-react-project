@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\User\Repositories;
+namespace App\Domain\Post\Repositories;
 
 use App\Domain\Post\DTO\CreatePostDataDTO;
 use App\Domain\Post\DTO\UpdatePostDataDTO;
@@ -11,7 +11,7 @@ use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 class PostRepository implements PostRepositoryInterface
 {
     /**
-     * Get all users
+     * Get all posts
      * @param int $perPage
      * @return AnonymousResourceCollection
      */
@@ -33,6 +33,7 @@ class PostRepository implements PostRepositoryInterface
             'title'        => $data->title,
             'description'  => $data->description,
             'user_id'      => $data->userId,
+            'image'        => $data->image,
         ]);
     }
 

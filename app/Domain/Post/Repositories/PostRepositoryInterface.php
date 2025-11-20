@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\User\Repositories;
+namespace App\Domain\Post\Repositories;
 
 use App\Domain\Post\DTO\CreatePostDataDTO;
 use App\Domain\Post\DTO\UpdatePostDataDTO;

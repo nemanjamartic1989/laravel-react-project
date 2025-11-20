@@ -22,10 +22,17 @@ class CreatePostDataDTO
      */
     public int $userId;
 
+    /**
+     * Image
+     * @var string
+     */
+    public string $image;
+
     public function __construct(array $data)
     {
         $this->title = $data['title'];
         $this->description = $data['description'];
-        $this->userId = bcrypt($data['user_id']);
+        $this->userId = $data['user_id'];
+        $this->image = $data['image'];
     }
 }
