@@ -7,6 +7,7 @@ use App\Domain\Post\DTO\UpdatePostDataDTO;
 use App\Domain\Post\Repositories\PostRepositoryInterface;
 use App\Models\Post;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Facades\Auth;
 
 class PostService
 {
@@ -32,7 +33,9 @@ class PostService
      */
     public function store(array $data): Post
     {
+        $data['user_id'] = Auth::user()->id;
         $dto = new CreatePostDataDTO($data);
+
         return $this->repository->store($dto);
     }
 

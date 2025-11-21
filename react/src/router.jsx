@@ -7,6 +7,7 @@ import Register from "./views/Register";
 import Users from "./views/Users";
 import UserForm from "./views/UserForm";
 import Posts from "./views/posts/PostOverview";
+import PostForm from "./views/posts/PostForm";
 
 const router = createBrowserRouter([
   {
@@ -43,14 +44,14 @@ const router = createBrowserRouter([
         path: '/posts',
         element: <Posts/>
       },
-      // {
-      //   path: '/users/new',
-      //   element: <UserForm key="userCreate" />
-      // },
-      // {
-      //   path: '/users/:id',
-      //   element: <UserForm key="userUpdate" />
-      // }
+      {
+        path: '/posts/new',
+        element: <PostForm key="postCreate" />
+      },
+      {
+        path: '/posts/:id/edit',
+        element: <PostForm key="postUpdate" />
+      }
     ]
   },
   {

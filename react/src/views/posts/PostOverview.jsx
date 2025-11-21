@@ -15,7 +15,7 @@ export default function Posts() {
     }, [])
 
     const onDeleteClick = (post) => {
-        selectedPost(post);
+        setSelectePost(post);
         setShowModal(true);
     };
 
@@ -82,14 +82,14 @@ export default function Posts() {
                     </td>
                     <td>
                       <img
-                        src={p.image ? `http://localhost:8000/${p.image}` : 'http://localhost:8000/default-photo.jpg'}
+                        src={p.image ? `http://localhost:8000/storage/${p.image}` : 'http://localhost:8000/default-photo.jpg'}
                         alt={p.title}
                         style={{ width: '100px', height: 'auto' }}
                       />
                     </td>
                     <td>{p.created_at}</td>
                     <td>
-                      <Link className="btn-edit" to={'/posts/' + p.id}>Edit</Link>
+                      <Link className="btn-edit" to={'/posts/' + p.id + '/edit'}>Edit</Link>
                       &nbsp;
                       <button className="btn-delete" onClick={() => onDeleteClick(p)}>Delete</button>
                     </td>

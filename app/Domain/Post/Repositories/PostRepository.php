@@ -27,13 +27,13 @@ class PostRepository implements PostRepositoryInterface
      * @param CreatePostDataDTO $data
      * @return Post
      */
-    public function store(CreatePostDataDTO $data): Post
+    public function store(CreatePostDataDTO $dto): Post
     {
         return Post::create([
-            'title'        => $data->title,
-            'description'  => $data->description,
-            'user_id'      => $data->userId,
-            'image'        => $data->image,
+            'title'        => $dto->title,
+            'description'  => $dto->description,
+            'user_id'      => $dto->userId,
+            'image'        => $dto->image,
         ]);
     }
 
@@ -45,7 +45,17 @@ class PostRepository implements PostRepositoryInterface
      */
     public function update(Post $post, UpdatePostDataDTO $dto): Post
     {
-        $post->update($dto->toArray());
-        return $post;
+        $data = [
+            'title'        => $dto->title,
+            'description'  => $dto->description,
+        ];
+
+        if (!is_null($dto->image)) {
+            $data['image'] = $dto->image;
+        }
+
+        $post->update($data);
+
+        return $post->refresh();
     }
 }

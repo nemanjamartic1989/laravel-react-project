@@ -45,6 +45,14 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      */
+    public function edit(Post $post): PostResource
+    {
+        return new PostResource($post);
+    }
+
+    /**
+     * Display the specified resource.
+     */
     public function show(Post $post): PostResource
     {
         return new PostResource($post);
@@ -56,6 +64,11 @@ class PostController extends Controller
     public function update(UpdatePostRequest $request, Post $post): PostResource
     {
         $data = $request->validated();
+
+        if ($request->hasFile('image')) {
+            $data['image'] = $request->file('image')->store('images', 'public');
+        }
+
         $post = $this->service->update($post, $data);
 
         return new PostResource($post);

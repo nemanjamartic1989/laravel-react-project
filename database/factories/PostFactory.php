@@ -23,7 +23,20 @@ class PostFactory extends Factory
             'user_id'     => User::factory(),
             'title'       => $this->faker->sentence(6),
             'description' => $this->faker->paragraph(3),
-            'image'       => 'images/default-photo.jpg',
+            'image' => function () {
+                $source = public_path('images/default-photo.jpg');
+                $targetDir = storage_path('app/public/images');
+
+                if (!file_exists($targetDir)) {
+                    mkdir($targetDir, 0775, true);
+                }
+
+                $newFile = $targetDir.'/'.uniqid().'_default.jpg';
+
+                copy($source, $newFile);
+
+                return 'images/' . basename($newFile);
+            },
             'created_at'  => now(),
             'updated_at'  => now(),
         ];

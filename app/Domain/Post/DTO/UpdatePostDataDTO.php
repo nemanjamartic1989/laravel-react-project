@@ -17,22 +17,37 @@ class UpdatePostDataDTO
     public string $description;
 
     /**
-     * User ID
-     * @var int
-     */
-    public int $userId;
-
-    /**
      * Image
      * @var string
      */
-    public string $image;
+    public ?string $image;
 
     public function __construct(array $data)
     {
         $this->title = $data['title'];
         $this->description = $data['description'];
-        $this->userId = $data['user_id'];
-        $this->image = $data['image'];
+        $this->image = isset($data['image']) ? $data['image'] : null;
+    }
+
+    /**
+     * Format data for updating a post
+     * @return array{
+     *     title: string,
+     *     description: string,
+     *     image?: string
+     * }
+     */
+    public function toArray(): array
+    {
+        $data = [
+            'title' => $this->title,
+            'description' => $this->description,
+        ];
+
+        if (!is_null($this->image)) {
+            $data['image'] = $this->image;
+        }
+
+        return $data;
     }
 }

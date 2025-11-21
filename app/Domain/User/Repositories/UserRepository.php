@@ -23,6 +23,7 @@ class UserRepository implements UserRepositoryInterface
             ->paginate(10));
 
     }
+
     /**
      * Create user
      * @param CreateUserDataDTO $data
@@ -46,6 +47,6 @@ class UserRepository implements UserRepositoryInterface
     public function update(User $user, UpdateUserDataDTO $dto): User
     {
         $user->update($dto->toArray());
-        return $user;
+        return $user->refresh();
     }
 }
