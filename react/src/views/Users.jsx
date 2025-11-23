@@ -42,7 +42,6 @@ export default function Users() {
       .then(({ data }) => {
         setLoading(false);
         setUsers(data.data);
-        console.log(data.data);
       })
       .catch(() => setLoading(false));
   };

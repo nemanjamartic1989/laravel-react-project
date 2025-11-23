@@ -41,7 +41,6 @@ export default function Posts() {
         .then(({ data }) => {
             setLoading(false);
             setPosts(data.data);
-            console.log(data.data);
         })
         .catch(() => setLoading(false));
     };
