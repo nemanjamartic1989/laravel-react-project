@@ -26,7 +26,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('/users', UserController::class);
     Route::apiResource('/posts', PostController::class);
     Route::get('/posts/{post}/edit', [PostController::class, 'edit']);
-
 });
 
 Route::post('/register', [AuthController::class, 'register']);

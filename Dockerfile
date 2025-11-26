@@ -10,7 +10,10 @@ RUN apt-get update && apt-get install -y \
     git \
     curl \
     mariadb-client \
-    && docker-php-ext-install pdo_mysql mbstring xml bcmath
+    libjpeg-dev \
+    libfreetype6-dev \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install gd pdo_mysql mbstring xml bcmath
 
 # Install Composer
 COPY --from=composer:2.6 /usr/bin/composer /usr/bin/composer
