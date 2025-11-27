@@ -65,6 +65,14 @@ class User extends Authenticatable
     }
 
     /**
+     * User has many comments
+     */
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    /**
      * Accessor name and role
      */
     public function getNameWithRoleAttribute(): string
