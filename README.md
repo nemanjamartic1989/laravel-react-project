@@ -1,7 +1,15 @@
-## 🧩 User CRUD Dashboard
+## 🧩 User CRUD Dashboard & Blog
 
-User CRUD Dashboard is a full-stack web application built with **Laravel 12** and **React 18**, providing a modern interface and REST API for managing users.
-It includes **soft delete**, **token-based authentication (Sanctum)**, and both **backend** and **end-to-end testing** with **PHPUnit** and **Cypress**.
+User CRUD Dashboard is a full-stack web application built with **Laravel 12** and **React 18**, providing a modern interface and REST API for managing users and blog content.
+
+It includes:  
+- **User Management** – full CRUD operations with **soft deletes** and **token-based authentication (Sanctum)**.  
+- **Blog Module** – manage **Posts** and **Comments**, with relationships:  
+  - Posts belong to users  
+  - Comments belong to posts and users  
+  - Both posts and comments support **soft deletes**  
+- **REST API** – backend API for users, posts, and comments.  
+- **Testing** – backend tests with **PHPUnit** and end-to-end tests with **Cypress**.
 
 ---
 
