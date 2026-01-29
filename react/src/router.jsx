@@ -8,6 +8,7 @@ import Users from "./views/Users";
 import UserForm from "./views/UserForm";
 import Posts from "./views/posts/PostOverview";
 import PostForm from "./views/posts/PostForm";
+import PostDetail from "./views/posts/PostDetail";
 
 const router = createBrowserRouter([
   {
@@ -51,6 +52,10 @@ const router = createBrowserRouter([
       {
         path: '/posts/:id/edit',
         element: <PostForm key="postUpdate" />
+      },
+      {
+        path: '/posts/:id',
+        element: <PostDetail key="postShow" />
       }
     ]
   },

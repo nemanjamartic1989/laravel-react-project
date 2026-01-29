@@ -8,14 +8,14 @@ export default function Posts() {
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(false);
     const [showModal, setShowModal] = useState(false);
-    const [selectedPost, setSelectePost] = useState(null);
+    const [selectedPost, setSelectedPost] = useState(null);
 
     useEffect(() => {
         getPosts();
     }, [])
 
     const onDeleteClick = (post) => {
-        setSelectePost(post);
+        setSelectedPost(post);
         setShowModal(true);
     };
 
@@ -31,7 +31,7 @@ export default function Posts() {
         })
         .finally(() => {
             setShowModal(false);
-            setSelectePost(null);
+            setSelectedPost(null);
         });
     };
 
@@ -75,7 +75,9 @@ export default function Posts() {
                 <tbody>
                 {posts.map(p => (
                   <tr key={p.id}>
-                    <td>{p.title}</td>
+                    <td>
+                      <Link className="btn-show" to={'/posts/' + p.id}>{p.title}</Link>
+                    </td>
                     <td style={{ whiteSpace: 'pre-wrap' }}>
                       {p.description}
                     </td>
