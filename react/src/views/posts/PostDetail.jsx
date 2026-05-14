@@ -19,6 +19,10 @@ export default function PostDetail() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
+    const [comments, setComments] = useState([]);
+    const [commentText, setCommentText] = useState('');
+    const [commentLoading, setCommentLoading] = useState(false);
+
     useEffect(() => {
         if (!id) return;
 
@@ -45,6 +49,27 @@ export default function PostDetail() {
             month: 'short',
             year: 'numeric',
         });
+    };
+
+    const handleAddComment = (e) => {
+        e.preventDefault();
+
+        if (!commentText.trim()) return;
+
+        setCommentLoading(true);
+
+        axiosClient
+            .post(`/posts/${id}/comments`, {
+                description: commentText,
+                user_id: post.user_id,
+            })
+            .then(({ data }) => {
+                setComments((prev) => [data, ...prev]);
+                setCommentText('');
+            })
+            .finally(() => {
+                setCommentLoading(false);
+            });
     };
 
     if (loading) {
@@ -82,6 +107,21 @@ export default function PostDetail() {
                     />
                 </div>
             )}
+            <div className="comments-section">
+                <h3>Comments</h3>
+
+                <form onSubmit={handleAddComment} className="comment-form">
+                    <textarea
+                        value={commentText}
+                        onChange={(e) => setCommentText(e.target.value)}
+                        placeholder="Write a comment..."
+                    />
+
+                    <button type="submit" disabled={commentLoading}>
+                        {commentLoading ? 'Posting...' : 'Add comment'}
+                    </button>
+                </form>
+            </div>
         </div>
     );
 }

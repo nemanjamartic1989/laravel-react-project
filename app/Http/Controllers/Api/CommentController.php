@@ -36,6 +36,8 @@ class CommentController extends Controller
     public function store(Post $post, CreateCommentRequest $request): Comment
     {
         $data = $request->validated();
+        $data['user_id'] = auth()->id();
+
         return $this->service->store($post, $data);
     }
 
